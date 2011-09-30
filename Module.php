@@ -15,7 +15,16 @@ class Module
 
     public function initAutoloader()
     {
-        include __DIR__ . '/autoload_register.php';
+        AutoloaderFactory::factory(array(
+            'Zend\Loader\ClassMapAutoloader' => array(
+                __DIR__ . '/autoload_classmap.php',
+            ),
+            'Zend\Loader\StandardAutoloader' => array(
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                ),
+            ),
+        ));
     }
 
     public function getConfig($env = null)
