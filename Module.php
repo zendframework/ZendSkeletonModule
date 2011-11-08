@@ -2,8 +2,7 @@
 
 namespace ZendSkeletonModule;
 
-use Zend\Config\Config,
-    Zend\Module\Manager,
+use Zend\Module\Manager,
     Zend\Loader\AutoloaderFactory;
 
 class Module
@@ -29,6 +28,6 @@ class Module
 
     public function getConfig($env = null)
     {
-        return new Config(include __DIR__ . '/configs/module.config.php');
+        return include __DIR__ . '/configs/module.config.php';
     }
 }

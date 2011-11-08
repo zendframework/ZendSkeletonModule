@@ -9,7 +9,7 @@ return array(
                 'parameters' => array(
                     'options'  => array(
                         'script_paths' => array(
-                            'skeleton' => __DIR__ . '/../views',
+                            'ZendSkeletonModule' => __DIR__ . '/../views',
                         ),
                     ),
                 ),
