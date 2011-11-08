@@ -1,5 +1,5 @@
 <?php
-return array (
-  'ZendSkeletonModule\\Module' => __DIR__ . DIRECTORY_SEPARATOR . 'Module.php',
-  'ZendSkeletonModule\\Controller\\SkeletonController' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'ZendSkeletonModule' . DIRECTORY_SEPARATOR . 'Controller' . DIRECTORY_SEPARATOR . 'SkeletonController.php',
+return array(
+    'ZendSkeletonModule\Controller\SkeletonController' => __DIR__ . '/src/ZendSkeletonModule/Controller/SkeletonController.php',
+    'ZendSkeletonModule\Module'                        => __DIR__ . '/Module.php',
 );
