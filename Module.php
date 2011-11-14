@@ -2,19 +2,13 @@
 
 namespace ZendSkeletonModule;
 
-use Zend\Module\Manager,
-    Zend\Loader\AutoloaderFactory;
+use Zend\Module\Consumer\AutoloaderProvider;
 
-class Module
+class Module implements AutoloaderProvider
 {
-    public function init(Manager $moduleManager)
+    public function getAutoloaderConfig()
     {
-        $this->initAutoloader();
-    }
-
-    public function initAutoloader()
-    {
-        AutoloaderFactory::factory(array(
+        return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php',
             ),
@@ -23,7 +17,7 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
-        ));
+        );
     }
 
     public function getConfig($env = null)
