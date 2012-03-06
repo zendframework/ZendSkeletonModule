@@ -5,12 +5,10 @@ return array(
             'alias' => array(
                 'skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
             ),
-            'Zend\View\PhpRenderer' => array(
+            'Zend\View\Resolver\TemplatePathStack' => array(
                 'parameters' => array(
-                    'options'  => array(
-                        'script_paths' => array(
-                            'ZendSkeletonModule' => __DIR__ . '/../views',
-                        ),
+                    'paths'  => array(
+                        'ZendSkeletonModule' => __DIR__ . '/../view',
                     ),
                 ),
             ),
