@@ -13,7 +13,7 @@
  * Never commit plaintext passwords to the source code repository.
  */
 
-define('ZEND_FRAMEWORK_PATH', realpath(__DIR__ . '/../../../vendor/ZendFramework/library'));
+define('ZF2_PATH', realpath(__DIR__ . '/../../../vendor/ZendFramework/library'));
 
 /**
  * The bootstrap supports several more options, however most modules will
