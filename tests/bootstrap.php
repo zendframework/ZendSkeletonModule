@@ -10,7 +10,7 @@ if (is_readable($testsPath . '/TestConfiguration.php')) {
 }
 
 $path = array(
-    ZEND_FRAMEWORK_PATH,
+    ZF2_PATH,
     get_include_path(),
 );
 set_include_path(implode(PATH_SEPARATOR, $path));
