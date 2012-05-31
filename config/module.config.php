@@ -1,17 +1,13 @@
 <?php
 return array(
-    'di' => array(
-        'instance' => array(
-            'alias' => array(
-                'skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
-            ),
-            'Zend\View\Resolver\TemplatePathStack' => array(
-                'parameters' => array(
-                    'paths'  => array(
-                        'ZendSkeletonModule' => __DIR__ . '/../view',
-                    ),
-                ),
-            ),
+    'controller' => array(
+        'classes' => array(
+            'skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
+        ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'ZendSkeletonModule' => __DIR__ . '/../view',
         ),
     ),
 );
