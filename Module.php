@@ -28,7 +28,7 @@ class Module implements AutoloaderProviderInterface
 
     public function onBootstrap($e)
     {
-        // You may not need to do this if you're doing it elsewhere in your 
+        // You may not need to do this if you're doing it elsewhere in your
         // application
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();

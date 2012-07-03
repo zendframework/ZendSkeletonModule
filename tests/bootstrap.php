@@ -1,5 +1,7 @@
 <?php
 
+$additionalNamespaces = $additionalModulePaths = $moduleDependencies = null;
+
 $rootPath = realpath(dirname(__DIR__));
 $testsPath = "$rootPath/tests";
 
@@ -15,12 +17,20 @@ $path = array(
 );
 set_include_path(implode(PATH_SEPARATOR, $path));
 
-require_once 'Zend/Loader/AutoloaderFactory.php';
-\Zend\Loader\AutoloaderFactory::factory(
-    array('Zend\Loader\StandardAutoloader' =>
-        array(
-            'fallback_autoloader' => false
-        ),
+require_once  'Zend/Loader/AutoloaderFactory.php';
+require_once  'Zend/Loader/StandardAutoloader.php';
+
+use Zend\Loader\AutoloaderFactory;
+use Zend\Loader\StandardAutoloader;
+
+// setup autoloader
+AutoloaderFactory::factory(
+    array(
+    	'Zend\Loader\StandardAutoloader' => array(
+            StandardAutoloader::AUTOREGISTER_ZF => true,
+            StandardAutoloader::ACT_AS_FALLBACK => false,
+            StandardAutoloader::LOAD_NS => $additionalNamespaces,
+        )
     )
 );
 
@@ -45,17 +55,17 @@ if (isset($moduleDependencies)) {
     $modules = array_merge($modules, $moduleDependencies);
 }
 
-$listenerOptions = new Zend\Module\Listener\ListenerOptions(array('module_paths' => $modulePaths));
-$defaultListeners = new Zend\Module\Listener\DefaultListenerAggregate($listenerOptions);
-$moduleManager = new \Zend\Module\Manager($modules);
-$moduleManager->events()->attachAggregate($defaultListeners);
+$listenerOptions = new Zend\ModuleManager\Listener\ListenerOptions(array('module_paths' => $modulePaths));
+$defaultListeners = new Zend\ModuleManager\Listener\DefaultListenerAggregate($listenerOptions);
+$moduleManager = new \Zend\ModuleManager\ModuleManager($modules);
+$moduleManager->getEventManager()->attachAggregate($defaultListeners);
 $moduleManager->loadModules();
 
 if (method_exists($moduleTestCaseClassname, 'setLocator')) {
     $config = $defaultListeners->getConfigListener()->getMergedConfig();
 
     $di = new \Zend\Di\Di;
-    $di->instanceManager()->addTypePreference('Zend\Di\Locator', $di);
+    $di->instanceManager()->addTypePreference('Zend\Di\LocatorInterface', $di);
 
     $diConfig = new \Zend\Di\Configuration($config['di']);
     $diConfig->configure($di);
@@ -64,7 +74,7 @@ if (method_exists($moduleTestCaseClassname, 'setLocator')) {
         array(
             'definition' => array(
                 'class' => array(
-                    'Zend\Mvc\Router\RouteStack' => array(
+                    'Zend\Mvc\Router\RouteStackInterface' => array(
                         'instantiator' => array(
                             'Zend\Mvc\Router\Http\TreeRouteStack',
                             'factory'
