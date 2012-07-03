@@ -2,9 +2,10 @@
 
 namespace ZendSkeletonModule;
 
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 
-class Module
+class Module implements AutoloaderProviderInterface
 {
     public function getAutoloaderConfig()
     {
