@@ -2,9 +2,9 @@
 
 namespace ZendSkeletonModule\Controller;
 
-use Zend\Mvc\Controller\ActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 
-class SkeletonController extends ActionController
+class SkeletonController extends AbstractActionController
 {
     public function indexAction()
     {

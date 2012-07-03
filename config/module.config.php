@@ -1,7 +1,7 @@
 <?php
 return array(
-    'controller' => array(
-        'classes' => array(
+    'controllers' => array(
+        'invokables' => array(
             'skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
         ),
     ),

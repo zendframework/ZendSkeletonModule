@@ -2,9 +2,10 @@
 
 namespace ZendSkeletonModule;
 
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 
-class Module
+class Module implements AutoloaderProviderInterface
 {
     public function getAutoloaderConfig()
     {
@@ -27,7 +28,7 @@ class Module
 
     public function onBootstrap($e)
     {
-        // You may not need to do this if you're doing it elsewhere in your 
+        // You may not need to do this if you're doing it elsewhere in your
         // application
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
