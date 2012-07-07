@@ -16,7 +16,7 @@ return array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'ZendSkeletonModule\Controller',
-                        'controller'    => 'IndexController',
+                        'controller'    => 'SkeletonController',
                         'action'        => 'index',
                     ),
                 ),
