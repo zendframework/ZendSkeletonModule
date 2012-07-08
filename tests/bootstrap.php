@@ -67,8 +67,10 @@ if (method_exists($moduleTestCaseClassname, 'setLocator')) {
     $di = new \Zend\Di\Di;
     $di->instanceManager()->addTypePreference('Zend\Di\LocatorInterface', $di);
 
-    $diConfig = new \Zend\Di\Configuration($config['di']);
-    $diConfig->configure($di);
+    if (isset($config['di'])) {
+        $diConfig = new \Zend\Di\Configuration($config['di']);
+        $diConfig->configure($di);
+    }
 
     $routerDiConfig = new \Zend\Di\Configuration(
         array(
