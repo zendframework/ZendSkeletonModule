@@ -12,6 +12,11 @@ namespace ZendSkeletonModule;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 
+/**
+ * Short Description of module
+ *
+ * Long Description of module
+ */
 class Module implements AutoloaderProviderInterface
 {
     public function getAutoloaderConfig()
@@ -33,12 +38,22 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap($event)
     {
         // You may not need to do this if you're doing it elsewhere in your
         // application
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager        = $event->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+
+/*
+    public function init($moduleManager)
+    {
+        // Any module dependencies your module relies on could be placed here
+	// load will throw an exception if the module can't be loaded
+        // $moduleManager->load('someModule');
+
+    }
+*/
 }
