@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
+            'ZendSkeletonModule\Controller\Skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
         ),
     ),
     'router' => array(
@@ -16,7 +16,7 @@ return array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'ZendSkeletonModule\Controller',
-                        'controller'    => 'SkeletonController',
+                        'controller'    => 'Skeleton',
                         'action'        => 'index',
                     ),
                 ),
