@@ -62,9 +62,12 @@ if (isset($moduleDependencies)) {
     $modules = array_merge($modules, $moduleDependencies);
 }
 
+
 $listenerOptions = new Zend\ModuleManager\Listener\ListenerOptions(array('module_paths' => $modulePaths));
 $defaultListeners = new Zend\ModuleManager\Listener\DefaultListenerAggregate($listenerOptions);
+$sharedEvents = new Zend\EventManager\SharedEventManager();
 $moduleManager = new \Zend\ModuleManager\ModuleManager($modules);
+$moduleManager->getEventManager()->setSharedManager($sharedEvents);
 $moduleManager->getEventManager()->attachAggregate($defaultListeners);
 $moduleManager->loadModules();
 
@@ -100,4 +103,4 @@ if (method_exists($moduleTestCaseClassname, 'setLocator')) {
 
 // When this is in global scope, PHPUnit catches exception:
 // Exception: Zend\Stdlib\PriorityQueue::serialize() must return a string or NULL
-unset($moduleManager);
+unset($moduleManager, $sharedEvents);
