@@ -33,7 +33,7 @@ use Zend\Loader\StandardAutoloader;
 // setup autoloader
 AutoloaderFactory::factory(
     array(
-    	'Zend\Loader\StandardAutoloader' => array(
+        'Zend\Loader\StandardAutoloader' => array(
             StandardAutoloader::AUTOREGISTER_ZF => true,
             StandardAutoloader::ACT_AS_FALLBACK => false,
             StandardAutoloader::LOAD_NS => $additionalNamespaces,
@@ -62,42 +62,23 @@ if (isset($moduleDependencies)) {
     $modules = array_merge($modules, $moduleDependencies);
 }
 
-$listenerOptions = new Zend\ModuleManager\Listener\ListenerOptions(array('module_paths' => $modulePaths));
-$defaultListeners = new Zend\ModuleManager\Listener\DefaultListenerAggregate($listenerOptions);
-$moduleManager = new \Zend\ModuleManager\ModuleManager($modules);
-$moduleManager->getEventManager()->attachAggregate($defaultListeners);
-$moduleManager->loadModules();
+$config = array(
+    'module_listener_options' => array(
+        'module_paths' => $modulePaths,
+    ),
+    'modules' => $modules,
+);
+
+$serviceManager = new \Zend\ServiceManager\ServiceManager(
+    new \Zend\Mvc\Service\ServiceManagerConfig()
+);
+$serviceManager->setService('ApplicationConfig', $config);
+$serviceManager->get('ModuleManager')->loadModules();
 
 if (method_exists($moduleTestCaseClassname, 'setLocator')) {
-    $config = $defaultListeners->getConfigListener()->getMergedConfig();
-
-    $di = new \Zend\Di\Di;
-    $di->instanceManager()->addTypePreference('Zend\Di\LocatorInterface', $di);
-
-    if (isset($config['di'])) {
-        $diConfig = new \Zend\Di\Config($config['di']);
-        $diConfig->configure($di);
-    }
-
-    $routerDiConfig = new \Zend\Di\Config(
-        array(
-            'definition' => array(
-                'class' => array(
-                    'Zend\Mvc\Router\RouteStackInterface' => array(
-                        'instantiator' => array(
-                            'Zend\Mvc\Router\Http\TreeRouteStack',
-                            'factory'
-                        ),
-                    ),
-                ),
-            ),
-        )
-    );
-    $routerDiConfig->configure($di);
-
-    call_user_func_array($moduleTestCaseClassname.'::setLocator', array($di));
+    call_user_func_array($moduleTestCaseClassname.'::setLocator', array($serviceManager));
 }
 
 // When this is in global scope, PHPUnit catches exception:
 // Exception: Zend\Stdlib\PriorityQueue::serialize() must return a string or NULL
-unset($moduleManager);
+unset($serviceManager);

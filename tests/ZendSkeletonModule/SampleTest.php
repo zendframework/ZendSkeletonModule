@@ -14,6 +14,6 @@ class SampleTest extends Framework\TestCase
 
     public function testSample()
     {
-        $this->assertInstanceOf('Zend\Di\LocatorInterface', $this->getLocator());
+        $this->assertInstanceOf('Zend\ServiceManager\ServiceLocatorInterface', $this->getLocator());
     }
 }
