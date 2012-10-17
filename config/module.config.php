@@ -1,10 +1,17 @@
 <?php
 return array(
+    // as the configuration is one large array, place your module specific
+    // config inside a key unique to your module.
+    'zend_skeleton_module' => array(
+
+    ),
+    // controller config
     'controllers' => array(
         'invokables' => array(
             'ZendSkeletonModule\Controller\Skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
         ),
     ),
+    // define any routes the module needs
     'router' => array(
         'routes' => array(
             'module-name-here' => array(
@@ -42,6 +49,7 @@ return array(
             ),
         ),
     ),
+    // define options for the view manager
     'view_manager' => array(
         'template_path_stack' => array(
             'ZendSkeletonModule' => __DIR__ . '/../view',
