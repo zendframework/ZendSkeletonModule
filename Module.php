@@ -11,6 +11,7 @@ namespace ZendSkeletonModule;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -34,7 +35,7 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap(MvcEvent $e)
     {
         // You may not need to do this if you're doing it elsewhere in your
         // application
