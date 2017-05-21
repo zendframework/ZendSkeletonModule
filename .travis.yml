@@ -10,7 +10,6 @@ cache:
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
-    - COVERAGE_DEPS="satooshi/php-coveralls"
     - LEGACY_DEPS="phpunit/phpunit"
     - SITE_URL: https://zendframework.github.io/zend-test
     - GH_REF: github.com/zendframework/ZendSkeletonModule.git
@@ -42,7 +41,6 @@ matrix:
         - DEPS=lowest
     - php: 7.1
       env:
-        - TEST_COVERAGE=true
         - DEPS=locked
     - php: 7.1
       env:
@@ -61,16 +59,13 @@ matrix:
 
 before_install:
   - travis_retry composer self-update
-  - if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini ; fi
 
 install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
   - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
   - composer show
 
 script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
