@@ -33,7 +33,6 @@ matrix:
       env:
         - DEPS=locked
         - CS_CHECK=true
-        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
         - PATH="$HOME/.local/bin:$PATH"
     - php: 7
       env:
@@ -59,3 +58,19 @@ matrix:
         - DEPS=latest
   allow_failures:
     - php: hhvm
+
+before_install:
+  - travis_retry composer self-update
+  - if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini ; fi
+
+install:
+  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
+  - composer show
+
+script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
+  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
