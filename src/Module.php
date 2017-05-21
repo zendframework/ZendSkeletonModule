@@ -1,16 +1,40 @@
 <?php
 /**
  * @link      http://github.com/zendframework/ZendSkeletonModule for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2017 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendSkeletonModule;
 
-class Module
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+
+class Module implements ConfigProviderInterface, DependencyIndicatorInterface
 {
+
+    /**
+     * {@inheritDoc}
+     */
     public function getConfig()
     {
-        return include __DIR__ . '/../config/module.config.php';
+        $provider = new ConfigProvider();
+
+        return [
+            'service_manager' => $provider->getDependencyConfig(),
+            'router' => $provider->getRouterConfig(),
+            'controllers' => $provider->getControllerConfig(),
+            'view_manager' => $provider->getViewManagerConfig(),
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getModuleDependencies()
+    {
+        return [
+            'Zend\Router',
+        ];
     }
 }

@@ -31,8 +31,7 @@ $ git remote remove origin
 ```
 
 The next step will be to change the namespace in the various files. Open each
-of `config/module.config.php`, `src/Module.php`, and
-`src/Controller/SkeletonController.php`, and replace any occurence of
+of `src/Module.php`, and `src/Controller/SkeletonController.php`, and replace any occurence of
 `ZendSkeletonModule` with your new namespace.
 
 > ### find and sed
