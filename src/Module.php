@@ -10,7 +10,7 @@ namespace ZendSkeletonModule;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 
-class Module implements ConfigProviderInterface, DependencyIndicatorInterface
+class Module /* implements ConfigProviderInterface, DependencyIndicatorInterface */
 {
 
     /**
