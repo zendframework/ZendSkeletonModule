@@ -1,0 +1,61 @@
+sudo: false
+
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.local
+
+env:
+  global:
+    - COMPOSER_ARGS="--no-interaction"
+    - COVERAGE_DEPS="satooshi/php-coveralls"
+    - LEGACY_DEPS="phpunit/phpunit"
+    - SITE_URL: https://zendframework.github.io/zend-test
+    - GH_REF: github.com/zendframework/ZendSkeletonModule.git
+
+matrix:
+  include:
+    - php: 5.6
+      env:
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=locked
+    - php: 5.6
+      env:
+        - DEPS=latest
+    - php: 7
+      env:
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=locked
+        - CS_CHECK=true
+        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
+        - PATH="$HOME/.local/bin:$PATH"
+    - php: 7
+      env:
+        - DEPS=latest
+    - php: 7.1
+      env:
+        - DEPS=lowest
+    - php: 7.1
+      env:
+        - TEST_COVERAGE=true
+        - DEPS=locked
+    - php: 7.1
+      env:
+        - DEPS=latest
+    - php: hhvm
+      env:
+        - DEPS=lowest
+    - php: hhvm
+      env:
+        - DEPS=locked
+    - php: hhvm
+      env:
+        - DEPS=latest
+  allow_failures:
+    - php: hhvm
