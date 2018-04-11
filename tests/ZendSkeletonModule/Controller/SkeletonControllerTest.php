@@ -7,9 +7,6 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ZendSkeletonModule\Controller\SkeletonController;
 use ZendSkeletonModule\Module;
 
-/**
- * @author Max Bösing <max.boesing@check24.de>
- */
 class SkeletonControllerTest extends AbstractHttpControllerTestCase
 {
 
