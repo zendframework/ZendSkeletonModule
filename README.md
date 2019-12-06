@@ -1,5 +1,9 @@
 # Zend Framework Skeleton Module
 
+> ## Repository abandoned 2019-12-05
+>
+> This repository is no longer maintained.
+
 This is a sample skeleton module for use with
 [zend-mvc](https://docs.zendframework.com/zend-mvc) applications.
 
